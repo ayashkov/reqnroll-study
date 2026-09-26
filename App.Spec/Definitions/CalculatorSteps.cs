@@ -2,7 +2,30 @@ namespace Study.App.Spec.Definitions;
 
 [Binding]
 public sealed class CalculatorSteps {
-    private readonly Calculator _calculator = new();
+    private readonly Calculator _calculator;
+
+    public CalculatorSteps(Calculator calculator)
+    {
+        Console.WriteLine($"CalculatorSteps created with {calculator.GetHashCode()}");
+
+        _calculator = calculator;
+    }
+
+    [BeforeScenario]
+    public void BeforeScenario(ScenarioContext ctx)
+    {
+        Console.WriteLine($"Before {ctx.ScenarioInfo.Title}");
+
+        _calculator.Reset();
+    }
+
+    [AfterScenario]
+    public void AfterScenario(ScenarioContext ctx)
+    {
+        Console.WriteLine($"After {ctx.ScenarioInfo.Title}");
+
+        _calculator.Reset();
+    }
 
     [Given("the first number is {int}")]
     [Given("the result is {int}")]

@@ -8,7 +8,7 @@ Scenario: Add two numbers
 	When the two numbers are added
 	Then the result should be 120
 
-Scenario: Reset accumulator
+Scenario: Reset result
     Given the result is 42
     When calculator is reset
     Then the result should be 0
