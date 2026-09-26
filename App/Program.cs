@@ -17,15 +17,14 @@ var summaries = new[] {
     "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () => {
-    var forecast = Enumerable.Range(1, 5).Select(index => new WeatherForecast(
+app.MapGet("/weatherforecast", () => Enumerable
+    .Range(1, 5)
+    .Select(index => new WeatherForecast(
         DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
         Random.Shared.Next(-20, 55),
-        summaries[Random.Shared.Next(summaries.Length)])
-    ).ToArray();
-
-    return forecast;
-})
+        summaries[Random.Shared.Next(summaries.Length)]))
+    .ToArray()
+)
 .WithName("GetWeatherForecast");
 
 app.Run();
