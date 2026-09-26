@@ -11,6 +11,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\App\Study.App.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Using Include="Reqnroll" />
         <Using Include="NUnit.Framework" />
     </ItemGroup>
