@@ -1,2 +1,3 @@
-# reqnroll-study
-A study of Reqnroll features
+# Reqnroll Study
+
+A study of Reqnroll features.
