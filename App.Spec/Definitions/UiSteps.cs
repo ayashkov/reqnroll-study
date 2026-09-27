@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -5,10 +7,18 @@ namespace Study.App.Spec.Definitions;
 
 [Binding]
 [Scope(Tag = "ui")]
-public class UiSteps(IWebDriver webDriver) {
+public class UiSteps(IWebDriver webDriver, IServer server) {
+    private readonly string _origin = server.Features
+        .Get<IServerAddressesFeature>()?
+        .Addresses
+        .DefaultIfEmpty()
+        .First() ?? throw new InvalidOperationException("no origin");
+
     [Given("the search page is loaded")]
     public void GivenTheSearchPageIsLoaded()
     {
+        Console.WriteLine($">>> {_origin}");
+
         webDriver.Navigate().GoToUrl("https://duckduckgo.com/");
     }
 
