@@ -1,3 +1,4 @@
+@api
 Feature: Weather API
 
 A sample weather forecast API.

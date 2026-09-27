@@ -6,7 +6,8 @@ using Newtonsoft.Json.Linq;
 namespace Study.App.Spec.Definitions;
 
 [Binding]
-public class WeatherSteps(HttpClient httpClient) {
+[Scope(Tag = "api")]
+public class ApiSteps(HttpClient httpClient) {
     private HttpResponseMessage _response = null!;
 
     [When("client calls GET {string}")]
