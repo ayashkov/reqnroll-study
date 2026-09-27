@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Mvc.Testing;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using Reqnroll.BoDi;
 
 namespace Study.App.Spec.Definitions;
@@ -13,6 +15,7 @@ public class Setup {
             WebApplicationFactory<Program>>();
         container.RegisterFactoryAs(c =>
             c.Resolve<WebApplicationFactory<Program>>().CreateClient());
+        container.RegisterTypeAs<TestWebDriver, IWebDriver>();
     }
 }
 
@@ -24,3 +27,6 @@ internal class TestApplicationFactory<P> : WebApplicationFactory<P>
         builder.UseEnvironment("Development");
     }
 }
+
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+internal class TestWebDriver : ChromeDriver;

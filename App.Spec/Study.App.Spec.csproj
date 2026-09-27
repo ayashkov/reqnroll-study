@@ -11,6 +11,8 @@
         <PackageReference Include="Reqnroll.NUnit" />
         <PackageReference Include="NUnit" />
         <PackageReference Include="NUnit3TestAdapter" />
+        <PackageReference Include="Selenium.Support" />
+        <PackageReference Include="Selenium.WebDriver" />
     </ItemGroup>
 
     <ItemGroup>
