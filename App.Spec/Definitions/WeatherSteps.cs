@@ -6,13 +6,13 @@ using Newtonsoft.Json.Linq;
 namespace Study.App.Spec.Definitions;
 
 [Binding]
-public class WeatherSteps {
+public class WeatherSteps(HttpClient httpClient) {
     private HttpResponseMessage _response = null!;
 
     [When("client calls GET {string}")]
     public async Task WhenClientCallsApiGet(string uri)
     {
-        _response = await Global.Client.GetAsync(uri);
+        _response = await httpClient.GetAsync(uri);
     }
 
     [Then("it produces {int} day weather forecast")]
