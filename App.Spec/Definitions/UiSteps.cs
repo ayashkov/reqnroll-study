@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 
 namespace Study.App.Spec.Definitions;
 
 [Binding]
 [Scope(Tag = "ui")]
-public class UiSteps(IWebDriver webDriver, IServer server) {
+public class UiSteps(IWebDriver webDriver, IServer server,
+    IReqnrollOutputHelper outputHelper) {
     private readonly string _origin = server.Features
         .Get<IServerAddressesFeature>()?
         .Addresses
@@ -17,7 +19,7 @@ public class UiSteps(IWebDriver webDriver, IServer server) {
     [Given("the search page is loaded")]
     public void GivenTheSearchPageIsLoaded()
     {
-        Console.WriteLine($">>> {_origin}");
+        outputHelper.WriteLine($"origin: {_origin}");
 
         webDriver.Navigate().GoToUrl("https://duckduckgo.com/");
     }
@@ -35,6 +37,11 @@ public class UiSteps(IWebDriver webDriver, IServer server) {
     public void ThenTheSearchProducesResults()
     {
         webDriver.Find("ol li article");
+
+        const string screenshot = "search-results.png";
+
+        webDriver.TakeScreenshot().SaveAsFile(screenshot);
+        outputHelper.AddAttachment(screenshot);
     }
 }
 

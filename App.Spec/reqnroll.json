@@ -5,9 +5,6 @@
   "formatters": {
     "html": {
       "outputFilePath": "reqnroll.html"
-    },
-    "message": {
-      "outputFilePath": "reqnroll.ndjson"
     }
   }
 }
