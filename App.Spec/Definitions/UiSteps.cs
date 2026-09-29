@@ -37,11 +37,7 @@ public class UiSteps(IWebDriver webDriver, IServer server,
     public void ThenTheSearchProducesResults()
     {
         webDriver.Find("ol li article");
-
-        const string screenshot = "search-results.png";
-
-        webDriver.TakeScreenshot().SaveAsFile(screenshot);
-        outputHelper.AddAttachment(screenshot);
+        webDriver.TakeScreenshotTo(outputHelper);
     }
 }
 
@@ -60,5 +56,15 @@ public static class Ext {
             .Where(e => e.Displayed)
             .DefaultIfEmpty()
             .First());
+    }
+
+    public static void TakeScreenshotTo(this IWebDriver webDriver,
+        IReqnrollOutputHelper outputHelper)
+    {
+        const string screenshot = "screenshot.png";
+
+        webDriver.TakeScreenshot().SaveAsFile(screenshot);
+        outputHelper.AddAttachment(screenshot);
+        File.Delete(screenshot);
     }
 }
