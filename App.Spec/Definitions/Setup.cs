@@ -39,4 +39,9 @@ internal class TestApplicationFactory<P> : WebApplicationFactory<P>
 }
 
 [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
-internal class TestWebDriver : ChromeDriver;
+internal class TestWebDriver : ChromeDriver {
+    public TestWebDriver()
+    {
+        Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+    }
+}

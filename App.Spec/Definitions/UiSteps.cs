@@ -16,6 +16,13 @@ public class UiSteps(IWebDriver webDriver, IServer server,
         .DefaultIfEmpty()
         .First() ?? throw new InvalidOperationException("no origin");
 
+    [AfterScenario]
+    public void TakeScreenshotOnFailure(ScenarioContext scenarioContext)
+    {
+        if (scenarioContext.TestError != null)
+            webDriver.TakeScreenshotTo(outputHelper);
+    }
+
     [Given("the search page is loaded")]
     public void GivenTheSearchPageIsLoaded()
     {
@@ -37,7 +44,6 @@ public class UiSteps(IWebDriver webDriver, IServer server,
     public void ThenTheSearchProducesResults()
     {
         webDriver.Find("ol li article");
-        webDriver.TakeScreenshotTo(outputHelper);
     }
 }
 
@@ -46,7 +52,7 @@ public static class Ext {
     {
         return new DefaultWait<T>(context) {
             PollingInterval = TimeSpan.FromMilliseconds(100),
-            Timeout = TimeSpan.FromSeconds(10)
+            Timeout = TimeSpan.FromSeconds(5)
         };
     }
 
