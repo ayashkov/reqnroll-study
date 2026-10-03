@@ -1,3 +1,4 @@
+using AwesomeAssertions;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using OpenQA.Selenium;
@@ -23,27 +24,16 @@ public class UiSteps(IWebDriver webDriver, IServer server,
             webDriver.TakeScreenshotTo(outputHelper);
     }
 
-    [Given("the search page is loaded")]
-    public void GivenTheSearchPageIsLoaded()
+    [When("client loads {string} in the browser")]
+    public void WhenClientLoadsStringInTheBrowser(string uri)
     {
-        outputHelper.WriteLine($"origin: {_origin}");
-
-        webDriver.Navigate().GoToUrl("https://duckduckgo.com/");
+        webDriver.Navigate().GoToUrl($"{_origin}{uri}");
     }
 
-    [When("client performs search for {string}")]
-    public void WhenClientPerformsSearchForString(string term)
+    [Then("the page shows {string} headline")]
+    public void ThenThePageShowsStringHeadline(string headline)
     {
-        var input = webDriver.Find("textarea[name=q]");
-
-        input.SendKeys(term);
-        input.SendKeys(Keys.Enter);
-    }
-
-    [Then("the search produces results")]
-    public void ThenTheSearchProducesResults()
-    {
-        webDriver.Find("ol li article");
+        webDriver.Find("main h1").Text.Should().Be(headline);
     }
 }
 
