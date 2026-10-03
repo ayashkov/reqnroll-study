@@ -26,7 +26,11 @@
             ],
             "styles": [
               "src/styles.css"
-            ]
+            ],
+            "outputPath": {
+              "base": "obj/npm/dist",
+              "browser": ""
+            }
           },
           "configurations": {
             "production": {
@@ -65,7 +69,10 @@
           "defaultConfiguration": "development"
         },
         "test": {
-          "builder": "@angular/build:unit-test"
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "watch": false
+          }
         }
       }
     }

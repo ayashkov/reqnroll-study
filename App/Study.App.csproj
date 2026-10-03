@@ -2,4 +2,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Ui\Study.Ui.csproj" />
+    </ItemGroup>
 </Project>

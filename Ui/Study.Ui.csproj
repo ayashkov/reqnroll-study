@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <NpmOutputPath>$(BaseIntermediateOutputPath)npm\</NpmOutputPath>
+        <NpmDist>$(NpmOutputPath)dist\</NpmDist>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <TsCompile Include="src\**" Exclude="**\*.spec.ts" />
+        <TsCompile Include="public/**" />
+    </ItemGroup>
+
+    <Target Name="NpmResources" DependsOnTargets="NpmBuild"
+        BeforeTargets="BeforeBuild">
+        <ItemGroup>
+            <NpmOutput Include="$(NpmDist)**" />
+            <EmbeddedResource Include="@(NpmOutput)">
+                <LogicalName>$(RootNamespace).$([System.String]::new(%(Identity)).Replace($(NpmDist), '').Replace('\', '.'))</LogicalName>
+            </EmbeddedResource>
+        </ItemGroup>
+        <Message Text="Added UI code as resources." />
+    </Target>
+
+    <Target Name="NpmBuild" DependsOnTargets="NpmInstall"
+        Inputs="@(TsCompile);node_modules\.npm-install"
+        Outputs="$(NpmDist)index.html">
+        <Exec Command="npm run build" />
+    </Target>
+
+    <Target Name="NpmTest" DependsOnTargets="NpmInstall" AfterTargets="VSTest">
+        <Exec Command="npm test" />
+    </Target>
+
+    <Target Name="NpmInstall" Inputs="package.json"
+        Outputs="node_modules\.npm-install">
+        <Exec Command="npm ci --quiet" />
+        <Touch Files="node_modules\.npm-install" AlwaysCreate="true" />
+    </Target>
+
+    <Target Name="NpmClean" AfterTargets="CoreClean">
+        <RemoveDir Directories=".angular;node_modules;$(NpmOutputPath)" />
+    </Target>
+</Project>
